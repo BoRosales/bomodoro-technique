@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SessionHistoryComponent } from './session-history.component';
+
+describe('SessionHistoryComponent', () => {
+  let component: SessionHistoryComponent;
+  let fixture: ComponentFixture<SessionHistoryComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SessionHistoryComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(SessionHistoryComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

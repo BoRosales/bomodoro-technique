@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-md sticky-top app-navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-white" routerLink="/">
+      <img src="./images/logo.svg" alt="Bomodoro logo" width="30" height="30" class="me-2">
+      Bomodoro
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="menuOpen()">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }" 
+             (click)="menuOpen.set(false)">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active"
+             (click)="menuOpen.set(false)">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active"
+             (click)="menuOpen.set(false)">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

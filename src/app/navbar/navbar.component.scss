@@ -1,0 +1,13 @@
+.app-navbar {
+  background-color: #8AD6D1;
+
+  .nav-link {
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.85);
+
+    &:hover,
+    &.active {
+      color: #fff;
+    }
+  }
+}
