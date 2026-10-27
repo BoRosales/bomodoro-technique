@@ -1,1 +1,26 @@
-<p>timer works!</p>
+<section class="timer d-flex flex-column align-items-center gap-4" [class.timer--break]="timer.phase() === 'break'">
+  <div class="timer__ring" role="timer" [attr.aria-label]="phaseLabel() + ' time remaining ' + timer.displayTime()">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="timer__track" cx="50" cy="50" [attr.r]="ringRadius" />
+      <circle
+        class="timer__progress"
+        cx="50"
+        cy="50"
+        [attr.r]="ringRadius"
+        [attr.stroke-dasharray]="ringCircumference"
+        [attr.stroke-dashoffset]="ringOffset()" />
+    </svg>
+    <div class="timer__readout">
+      <span class="timer__phase" data-testid="phase">{{ phaseLabel() }}</span>
+      <span class="timer__time" data-testid="time">{{ timer.displayTime() }}</span>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-lg timer__button" data-testid="toggle" (click)="timer.toggle()">
+    {{ buttonLabel() }}
+  </button>
+
+  <p class="timer__sessions text-muted mb-0">
+    Focus sessions completed: <strong data-testid="sessions">{{ timer.completedFocusSessions() }}</strong>
+  </p>
+</section>

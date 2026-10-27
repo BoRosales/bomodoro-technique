@@ -1,1 +1,44 @@
-<p>settings works!</p>
+<section class="settings mx-auto">
+  <h1 class="h3 mb-4">Timer settings</h1>
+
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="mb-3">
+      <label for="focusMinutes" class="form-label">Focus length (minutes)</label>
+      <input
+        id="focusMinutes"
+        type="number"
+        class="form-control"
+        formControlName="focusMinutes"
+        [min]="limits.focusMinutes.min"
+        [max]="limits.focusMinutes.max"
+        step="1"
+        [class.is-invalid]="form.controls.focusMinutes.invalid && form.controls.focusMinutes.touched" />
+      <div class="invalid-feedback">
+        Enter a whole number from {{ limits.focusMinutes.min }} to {{ limits.focusMinutes.max }}.
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="breakMinutes" class="form-label">Break length (minutes)</label>
+      <input
+        id="breakMinutes"
+        type="number"
+        class="form-control"
+        formControlName="breakMinutes"
+        [min]="limits.breakMinutes.min"
+        [max]="limits.breakMinutes.max"
+        step="1"
+        [class.is-invalid]="form.controls.breakMinutes.invalid && form.controls.breakMinutes.touched" />
+      <div class="invalid-feedback">
+        Enter a whole number from {{ limits.breakMinutes.min }} to {{ limits.breakMinutes.max }}.
+      </div>
+    </div>
+
+    <button type="submit" class="btn settings__save">Save</button>
+    @if (saved()) {
+      <p class="text-success mt-3 mb-0" role="status">
+        Saved. A timer that's already running or paused keeps its current length; the new lengths apply from the next phase.
+      </p>
+    }
+  </form>
+</section>

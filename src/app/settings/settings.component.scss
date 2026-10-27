@@ -1,0 +1,17 @@
+.settings {
+  max-width: 28rem;
+}
+
+.settings__save {
+  font-weight: bold;
+  color: #fff;
+  background-color: #4fb3ac;
+  border-color: #4fb3ac;
+
+  &:hover,
+  &:focus-visible {
+    color: #fff;
+    background-color: #3d9a94;
+    border-color: #3d9a94;
+  }
+}
