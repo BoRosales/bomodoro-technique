@@ -1,0 +1,45 @@
+<section id="about" class="about mx-auto" aria-labelledby="about-heading">
+  <h2 id="about-heading" class="about__title">About the Pomodoro Technique</h2>
+
+  <p class="lead">
+    The Pomodoro Technique is a time-management method created by Francesco Cirillo in the late 1980s. It's named
+    after the tomato-shaped kitchen timer he used as a student (<em>pomodoro</em> is Italian for "tomato").
+  </p>
+  <p>
+    The idea is simple: work in short, focused bursts with regular breaks in between. Short sessions make big tasks
+    easier to start, help you resist distractions, and the breaks keep you fresh, so you can stay productive for
+    longer without burning out.
+  </p>
+
+  <h3 class="about__subtitle">How to use Bomodoro</h3>
+  <ol class="about__steps">
+    <li><strong>Pick one task</strong> to work on. Keep it specific, like "draft the intro" instead of "work on essay".</li>
+    <li>
+      <strong>Press Start</strong> to begin a focus session (currently
+      <span data-testid="focus-minutes">{{ settings().focusMinutes }}</span> minutes).
+    </li>
+    <li>
+      <strong>Stay on that task</strong> until the chime plays. If a distraction pops up, jot it down and come back
+      to it later.
+    </li>
+    <li>
+      <strong>Take a break.</strong> When the chime plays, the timer switches to your break
+      (<span data-testid="break-minutes">{{ settings().breakMinutes }}</span> minutes). Press Start, then step away:
+      stretch, grab water, rest your eyes.
+    </li>
+    <li><strong>Repeat.</strong> When the break ends, the timer is ready for your next focus session.</li>
+  </ol>
+
+  <h3 class="about__subtitle">Tips</h3>
+  <ul class="about__tips">
+    <li>
+      The classic method uses 25-minute focus sessions with 5-minute breaks, plus a longer 15–30 minute break after
+      every four sessions. Keep an eye on your session count and treat yourself to that longer rest.
+    </li>
+    <li>
+      Not everyone works best in 25-minute blocks. Try different lengths in <a routerLink="/settings">Settings</a>
+      to find your rhythm.
+    </li>
+    <li>Need to step away mid-session? Press Pause; your progress is saved, even if you close the tab.</li>
+  </ul>
+</section>

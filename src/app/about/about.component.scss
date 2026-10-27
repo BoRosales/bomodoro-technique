@@ -1,0 +1,28 @@
+.about {
+  max-width: 42rem;
+}
+
+.about__title,
+.about__subtitle {
+  font-weight: bold;
+  color: #3d9a94;
+}
+
+.about__title {
+  margin-bottom: 1rem;
+}
+
+.about__subtitle {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+}
+
+.about__steps li,
+.about__tips li {
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: #3d9a94;
+  font-weight: bold;
+}
