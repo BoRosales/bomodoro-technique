@@ -1,0 +1,41 @@
+.music {
+  max-width: 42rem;
+  margin-top: 2rem;
+}
+
+.music__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #3d9a94;
+}
+
+.music__toggle {
+  min-width: 6rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4fb3ac;
+  border-color: #4fb3ac;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    color: #fff;
+    background-color: #3d9a94;
+    border-color: #3d9a94;
+  }
+}
+
+.music__embed {
+  border-radius: 12px;
+  overflow: hidden;
+
+  // The iFrame API replaces the placeholder div with its own iframe.
+  ::ng-deep iframe {
+    display: block;
+    border: 0;
+  }
+}
+
+a {
+  color: #3d9a94;
+  font-weight: bold;
+}

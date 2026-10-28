@@ -122,6 +122,23 @@ describe('TimerStateService', () => {
     expect(service.remainingMs()).toBe(10 * MINUTE);
   });
 
+  it('emits started$ and paused$ for user actions only', () => {
+    const service = create();
+    const events: string[] = [];
+    service.started$.subscribe(phase => events.push(`start:${phase}`));
+    service.paused$.subscribe(phase => events.push(`pause:${phase}`));
+
+    service.start();
+    service.start();
+    service.pause();
+    service.pause();
+    service.start();
+    vi.advanceTimersByTime(25 * MINUTE);
+    service.start();
+
+    expect(events).toEqual(['start:focus', 'pause:focus', 'start:focus', 'start:break']);
+  });
+
   it('records when a focus session starts, but not on resume or break start', () => {
     const service = create();
     expect(service.focusSessionStartedAt()).toBeNull();

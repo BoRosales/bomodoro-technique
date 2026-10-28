@@ -52,6 +52,8 @@ export class TimerStateService {
   private endAt: number | null = null;
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private readonly phaseCompletedSubject = new Subject<PhaseCompletedEvent>();
+  private readonly startedSubject = new Subject<TimerPhase>();
+  private readonly pausedSubject = new Subject<TimerPhase>();
 
   readonly settings = this._settings.asReadonly();
   readonly phase = this._phase.asReadonly();
@@ -63,6 +65,10 @@ export class TimerStateService {
   readonly focusSessionStartedAt = this._focusSessionStartedAt.asReadonly();
   /** Emits whenever a phase counts down to zero (hook for music, history, etc.). */
   readonly phaseCompleted$ = this.phaseCompletedSubject.asObservable();
+  /** Emits the phase when the user starts or resumes the timer (not when state is restored on load). */
+  readonly started$ = this.startedSubject.asObservable();
+  /** Emits the phase when the user pauses the timer. */
+  readonly paused$ = this.pausedSubject.asObservable();
 
   readonly isRunning = computed(() => this._status() === 'running');
   readonly remainingSeconds = computed(() => Math.ceil(this._remainingMs() / 1000));
@@ -78,6 +84,8 @@ export class TimerStateService {
     inject(DestroyRef).onDestroy(() => {
       this.stopTicking();
       this.phaseCompletedSubject.complete();
+      this.startedSubject.complete();
+      this.pausedSubject.complete();
     });
   }
 
@@ -93,6 +101,7 @@ export class TimerStateService {
     this._status.set('running');
     this.startTicking();
     this.persistState();
+    this.startedSubject.next(this._phase());
   }
 
   pause(): void {
@@ -104,6 +113,7 @@ export class TimerStateService {
     this.endAt = null;
     this._status.set('paused');
     this.persistState();
+    this.pausedSubject.next(this._phase());
   }
 
   toggle(): void {

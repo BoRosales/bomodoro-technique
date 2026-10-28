@@ -1,0 +1,38 @@
+<section class="music mx-auto" aria-labelledby="music-heading">
+  <div class="d-flex justify-content-between align-items-center gap-2 mb-2">
+    <div>
+      <h2 id="music-heading" class="music__title mb-0">Focus music</h2>
+      <p class="music__hint small text-muted mb-0">Plays when a focus session starts and pauses when it ends.</p>
+    </div>
+    <button
+      type="button"
+      class="btn btn-sm music__toggle"
+      data-testid="music-toggle"
+      [disabled]="player.status() !== 'ready'"
+      [attr.aria-pressed]="player.isPlaying()"
+      (click)="player.toggle()">
+      @if (player.status() === 'loading') {
+        Loading&hellip;
+      } @else if (player.isPlaying()) {
+        <span aria-hidden="true">&#10074;&#10074;</span> Pause
+      } @else {
+        <span aria-hidden="true">&#9654;</span> Play
+      }
+    </button>
+  </div>
+
+  <div class="music__embed" [style.min-height.px]="player.status() === 'error' ? null : player.mountHeight">
+    <div #embed></div>
+  </div>
+
+  @if (player.status() === 'error') {
+    <p class="small text-muted mb-0" data-testid="music-error">
+      The music player couldn't load (it may be blocked by a browser extension).
+      @if (player.fallbackUrl) {
+        <a [href]="player.fallbackUrl" target="_blank" rel="noopener noreferrer">
+          Open the playlist<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>.
+      }
+    </p>
+  }
+</section>
