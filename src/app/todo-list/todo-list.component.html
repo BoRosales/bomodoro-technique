@@ -1,0 +1,104 @@
+<section class="todo mx-auto" aria-labelledby="todo-heading">
+  <div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2 mb-3">
+    <h2 id="todo-heading" class="todo__title mb-0">Tasks</h2>
+    <span class="todo__session" data-testid="session-count" aria-live="polite">
+      Completed this focus session: <strong>{{ todos.completedThisSession() }}</strong>
+    </span>
+  </div>
+
+  <form class="d-flex gap-2 mb-1" (submit)="add($event)">
+    <label for="new-task" class="visually-hidden">New task</label>
+    <input
+      id="new-task"
+      class="form-control"
+      type="text"
+      placeholder="What are you working on?"
+      autocomplete="off"
+      data-testid="new-task"
+      [maxLength]="maxLength"
+      [value]="draft()"
+      [disabled]="!todos.canAdd()"
+      (input)="draft.set($any($event.target).value)" />
+    <button
+      type="submit"
+      class="btn todo__add"
+      data-testid="add-task"
+      [disabled]="!todos.canAdd() || !draft().trim()">
+      Add
+    </button>
+  </form>
+  <p class="small mb-3" [class.text-muted]="todos.canAdd()" [class.text-danger]="!todos.canAdd()" data-testid="limit">
+    @if (todos.canAdd()) {
+      {{ todos.openCount() }} of {{ maxOpen }} open tasks
+    } @else {
+      You've reached {{ maxOpen }} open tasks. Complete or delete one to add more.
+    }
+  </p>
+
+  @if (todos.todos().length) {
+    <ul class="list-group todo__list" data-testid="task-list">
+      @for (todo of todos.todos(); track todo.id) {
+        <li class="list-group-item d-flex align-items-center gap-2" [class.todo__item--done]="todo.completed">
+          <input
+            class="form-check-input mt-0 flex-shrink-0"
+            type="checkbox"
+            [attr.aria-label]="'Mark ' + todo.text + ' as ' + (todo.completed ? 'not done' : 'done')"
+            [checked]="todo.completed"
+            [disabled]="todo.completed && !todos.canAdd()"
+            [attr.title]="todo.completed && !todos.canAdd() ? 'Too many open tasks to reopen this one' : null"
+            (change)="toggle(todo, $event)" />
+
+          @if (editingId() === todo.id) {
+            <label class="visually-hidden" [for]="'edit-' + todo.id">Edit task</label>
+            <input
+              #editInput
+              class="form-control form-control-sm"
+              type="text"
+              data-testid="edit-input"
+              [id]="'edit-' + todo.id"
+              [maxLength]="maxLength"
+              [value]="editDraft()"
+              (input)="editDraft.set($any($event.target).value)"
+              (keydown.enter)="saveEdit(todo.id)"
+              (keydown.escape)="cancelEdit()"
+              (blur)="saveEdit(todo.id)" />
+          } @else {
+            <span
+              class="todo__text flex-grow-1"
+              data-testid="task-text"
+              title="Double-click to edit"
+              (dblclick)="startEdit(todo)">
+              {{ todo.text }}
+            </span>
+            <button
+              type="button"
+              class="btn btn-sm btn-link todo__action"
+              [attr.aria-label]="'Edit ' + todo.text"
+              (click)="startEdit(todo)">
+              Edit
+            </button>
+          }
+
+          <button
+            type="button"
+            class="btn btn-sm btn-link todo__action todo__action--delete"
+            data-testid="delete-task"
+            [attr.aria-label]="'Delete ' + todo.text"
+            (click)="todos.remove(todo.id)">
+            Delete
+          </button>
+        </li>
+      }
+    </ul>
+
+    @if (todos.completedCount()) {
+      <div class="text-end mt-2">
+        <button type="button" class="btn btn-sm btn-link todo__action" data-testid="clear-completed" (click)="todos.clearCompleted()">
+          Clear completed ({{ todos.completedCount() }})
+        </button>
+      </div>
+    }
+  } @else {
+    <p class="text-muted fst-italic mb-0" data-testid="empty">No tasks yet. Add one to plan your focus session.</p>
+  }
+</section>

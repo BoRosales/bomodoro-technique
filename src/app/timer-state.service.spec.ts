@@ -122,6 +122,25 @@ describe('TimerStateService', () => {
     expect(service.remainingMs()).toBe(10 * MINUTE);
   });
 
+  it('records when a focus session starts, but not on resume or break start', () => {
+    const service = create();
+    expect(service.focusSessionStartedAt()).toBeNull();
+
+    service.start();
+    const started = service.focusSessionStartedAt();
+    expect(started).toBe(Date.now());
+
+    vi.advanceTimersByTime(1_000);
+    service.pause();
+    service.start();
+    expect(service.focusSessionStartedAt()).toBe(started);
+
+    vi.advanceTimersByTime(25 * MINUTE);
+    service.start();
+    expect(service.phase()).toBe('break');
+    expect(service.focusSessionStartedAt()).toBe(started);
+  });
+
   it('restores a running timer after reload using wall-clock time', () => {
     create().start();
     vi.advanceTimersByTime(MINUTE);

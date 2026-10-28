@@ -1,0 +1,56 @@
+.todo {
+  max-width: 42rem;
+}
+
+.todo__title {
+  font-weight: bold;
+  color: #3d9a94;
+}
+
+.todo__session {
+  color: #3d9a94;
+}
+
+.todo__add {
+  font-weight: bold;
+  color: #fff;
+  background-color: #4fb3ac;
+  border-color: #4fb3ac;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    color: #fff;
+    background-color: #3d9a94;
+    border-color: #3d9a94;
+  }
+}
+
+.form-check-input:checked {
+  background-color: #4fb3ac;
+  border-color: #4fb3ac;
+}
+
+.todo__text {
+  word-break: break-word;
+  cursor: pointer;
+}
+
+.todo__item--done .todo__text {
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+.todo__action {
+  padding: 0 0.25rem;
+  color: #3d9a94;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.todo__action--delete {
+  color: #b8433a;
+}

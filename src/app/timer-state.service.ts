@@ -1,6 +1,7 @@
 import { DestroyRef, Service, computed, inject, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ChimeService } from './chime.service';
+import { readStorage, writeStorage } from './storage';
 
 export type TimerPhase = 'focus' | 'break';
 export type TimerStatus = 'idle' | 'running' | 'paused';
@@ -22,6 +23,8 @@ interface PersistedTimerState {
   remainingMs: number;
   endAt: number | null;
   completedFocusSessions: number;
+  /** Optional for compatibility with state saved before this field existed. */
+  focusSessionStartedAt?: number | null;
 }
 
 export const DEFAULT_TIMER_SETTINGS: TimerSettings = { focusMinutes: 25, breakMinutes: 5 };
@@ -45,6 +48,7 @@ export class TimerStateService {
   private readonly _phaseDurationMs = signal(0);
   private readonly _remainingMs = signal(0);
   private readonly _completedFocusSessions = signal(0);
+  private readonly _focusSessionStartedAt = signal<number | null>(null);
   private endAt: number | null = null;
   private intervalId: ReturnType<typeof setInterval> | null = null;
   private readonly phaseCompletedSubject = new Subject<PhaseCompletedEvent>();
@@ -55,6 +59,8 @@ export class TimerStateService {
   readonly phaseDurationMs = this._phaseDurationMs.asReadonly();
   readonly remainingMs = this._remainingMs.asReadonly();
   readonly completedFocusSessions = this._completedFocusSessions.asReadonly();
+  /** When the current (or most recent) focus session was started; null if none yet. */
+  readonly focusSessionStartedAt = this._focusSessionStartedAt.asReadonly();
   /** Emits whenever a phase counts down to zero (hook for music, history, etc.). */
   readonly phaseCompleted$ = this.phaseCompletedSubject.asObservable();
 
@@ -80,6 +86,9 @@ export class TimerStateService {
       return;
     }
     this.chime.prime();
+    if (this._status() === 'idle' && this._phase() === 'focus') {
+      this._focusSessionStartedAt.set(Date.now());
+    }
     this.endAt = Date.now() + this._remainingMs();
     this._status.set('running');
     this.startTicking();
@@ -178,6 +187,7 @@ export class TimerStateService {
       remainingMs: this._remainingMs(),
       endAt: this.endAt,
       completedFocusSessions: this._completedFocusSessions(),
+      focusSessionStartedAt: this._focusSessionStartedAt(),
     };
     writeStorage(STATE_STORAGE_KEY, state);
   }
@@ -190,6 +200,9 @@ export class TimerStateService {
     }
 
     this._completedFocusSessions.set(saved.completedFocusSessions);
+    this._focusSessionStartedAt.set(
+      Number.isFinite(saved.focusSessionStartedAt) ? (saved.focusSessionStartedAt as number) : null,
+    );
 
     if (saved.status === 'idle') {
       // Re-derive from settings in case they changed since the last visit.
@@ -266,21 +279,4 @@ function isValidState(state: PersistedTimerState | null): state is PersistedTime
     Number.isInteger(state.completedFocusSessions) &&
     state.completedFocusSessions >= 0
   );
-}
-
-function readStorage<T>(key: string): T | null {
-  try {
-    const raw = globalThis.localStorage?.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeStorage(key: string, value: unknown): void {
-  try {
-    globalThis.localStorage?.setItem(key, JSON.stringify(value));
-  } catch {
-    // Storage may be unavailable (private mode, quota); the timer still works in memory.
-  }
 }
