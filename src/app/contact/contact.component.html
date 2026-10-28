@@ -1,0 +1,22 @@
+<section id="contact" class="contact mx-auto" aria-labelledby="contact-heading">
+  <h2 id="contact-heading" class="contact__title">Contact Me</h2>
+
+  <p>
+    Have an idea for a new feature, a suggestion to make Bomodoro better, or found a bug? I'd love to hear from you.
+    Reach out with feature requests, enhancement ideas, or bug reports.
+  </p>
+
+  <div class="d-flex flex-column flex-sm-row gap-3">
+    <a class="btn contact__link" data-testid="email" [href]="mailto">
+      Email: {{ email }}
+    </a>
+    <a class="btn contact__link" data-testid="linkedin" [href]="linkedInUrl" target="_blank" rel="noopener noreferrer">
+      LinkedIn
+      <span class="visually-hidden">(opens in a new tab)</span>
+    </a>
+  </div>
+
+  <p class="text-muted small mt-3 mb-0">
+    For bug reports, it helps to include what you were doing, what you expected, and which browser you're using.
+  </p>
+</section>
