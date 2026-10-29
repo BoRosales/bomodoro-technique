@@ -1,12 +1,28 @@
 .timer {
   --timer-accent: #8ad6d1;
   --timer-accent-dark: #4fb3ac;
-  --timer-track: #e6f6f5;
+  --timer-track: var(--app-ring-track);
 }
 
 .timer--break {
   --timer-accent: #b8e8e4;
   --timer-accent-dark: #6cc4be;
+}
+
+:host-context([data-bs-theme='dark']) {
+  .timer {
+    --timer-accent: #4fb3ac;
+    --timer-accent-dark: #2f7f79;
+  }
+
+  .timer--break {
+    --timer-accent: #8ad6d1;
+    --timer-accent-dark: #3d8c86;
+  }
+
+  .timer__phase {
+    color: var(--timer-accent);
+  }
 }
 
 .timer__ring {
@@ -69,7 +85,7 @@
   &:hover,
   &:focus-visible {
     color: #fff;
-    background-color: #3d9a94;
-    border-color: #3d9a94;
+    background-color: var(--app-btn-bg-hover);
+    border-color: var(--app-btn-bg-hover);
   }
 }

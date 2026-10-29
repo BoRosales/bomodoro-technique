@@ -5,13 +5,13 @@
 .settings__save {
   font-weight: bold;
   color: #fff;
-  background-color: #4fb3ac;
-  border-color: #4fb3ac;
+  background-color: var(--app-btn-bg);
+  border-color: var(--app-btn-bg);
 
   &:hover,
   &:focus-visible {
     color: #fff;
-    background-color: #3d9a94;
-    border-color: #3d9a94;
+    background-color: var(--app-btn-bg-hover);
+    border-color: var(--app-btn-bg-hover);
   }
 }

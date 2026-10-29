@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ThemeService } from '../theme.service';
 
 @Component({
   imports: [RouterLink, RouterLinkActive],
@@ -8,6 +9,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  protected readonly theme = inject(ThemeService);
+  protected readonly isDark = computed(() => this.theme.theme() === 'dark');
   protected readonly menuOpen = signal(false);
 
   toggleMenu() {

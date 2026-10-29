@@ -12,7 +12,7 @@ describe('MusicPlayerComponent', () => {
 
   beforeEach(async () => {
     music = new FakeMusicPlayer();
-    for (const method of ['mount', 'unmount', 'play', 'pause'] as const) {
+    for (const method of ['play', 'pause'] as const) {
       vi.spyOn(music, method);
     }
     await TestBed.configureTestingModule({
@@ -24,9 +24,6 @@ describe('MusicPlayerComponent', () => {
     await fixture.whenStable();
   });
 
-  it('mounts the player into the page', () => {
-    expect(music.mount).toHaveBeenCalledWith(expect.any(HTMLElement));
-  });
 
   it('toggles play and pause', async () => {
     expect(button().textContent).toContain('Play');
@@ -55,8 +52,4 @@ describe('MusicPlayerComponent', () => {
     expect(el.querySelector('[data-testid="music-error"] a')!.getAttribute('href')).toBe(music.fallbackUrl);
   });
 
-  it('unmounts the player when destroyed', () => {
-    fixture.destroy();
-    expect(music.unmount).toHaveBeenCalled();
-  });
 });

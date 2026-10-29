@@ -4,30 +4,30 @@
 
 .todo__title {
   font-weight: bold;
-  color: #3d9a94;
+  color: var(--app-heading);
 }
 
 .todo__session {
-  color: #3d9a94;
+  color: var(--app-heading);
 }
 
 .todo__add {
   font-weight: bold;
   color: #fff;
-  background-color: #4fb3ac;
-  border-color: #4fb3ac;
+  background-color: var(--app-btn-bg);
+  border-color: var(--app-btn-bg);
 
   &:hover:not(:disabled),
   &:focus-visible {
     color: #fff;
-    background-color: #3d9a94;
-    border-color: #3d9a94;
+    background-color: var(--app-btn-bg-hover);
+    border-color: var(--app-btn-bg-hover);
   }
 }
 
 .form-check-input:checked {
-  background-color: #4fb3ac;
-  border-color: #4fb3ac;
+  background-color: var(--app-btn-bg);
+  border-color: var(--app-btn-bg);
 }
 
 .todo__text {
@@ -36,13 +36,13 @@
 }
 
 .todo__item--done .todo__text {
-  color: #6c757d;
+  color: var(--bs-secondary-color);
   text-decoration: line-through;
 }
 
 .todo__action {
   padding: 0 0.25rem;
-  color: #3d9a94;
+  color: var(--app-heading);
   text-decoration: none;
 
   &:hover,
@@ -52,5 +52,5 @@
 }
 
 .todo__action--delete {
-  color: #b8433a;
+  color: var(--app-danger-link);
 }

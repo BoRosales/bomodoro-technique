@@ -1,6 +1,7 @@
-import { Component, DestroyRef, ElementRef, afterNextRender, inject, viewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MusicPlayer } from './music-player';
 
+/** Home-page music controls. The embed itself lives in MusicDockComponent so it survives navigation. */
 @Component({
   imports: [],
   selector: 'app-music-player',
@@ -9,10 +10,4 @@ import { MusicPlayer } from './music-player';
 })
 export class MusicPlayerComponent {
   protected readonly player = inject(MusicPlayer);
-  private readonly embedHost = viewChild.required<ElementRef<HTMLElement>>('embed');
-
-  constructor() {
-    afterNextRender(() => this.player.mount(this.embedHost().nativeElement));
-    inject(DestroyRef).onDestroy(() => this.player.unmount());
-  }
 }

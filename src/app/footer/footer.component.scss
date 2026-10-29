@@ -1,6 +1,6 @@
 .app-footer {
   color: rgba(255, 255, 255, 0.9);
-  background-color: #2b6f6a;
+  background-color: var(--app-surface-dark);
 
   a {
     color: #fff;
@@ -42,13 +42,13 @@
 
 .app-footer__top {
   font-weight: bold;
-  color: #2b6f6a;
+  color: var(--app-surface-dark);
   background-color: #8ad6d1;
   border-color: #8ad6d1;
 
   &:hover,
   &:focus-visible {
-    color: #2b6f6a;
+    color: var(--app-surface-dark);
     background-color: #fff;
     border-color: #fff;
   }

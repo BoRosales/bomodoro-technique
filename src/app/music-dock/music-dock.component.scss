@@ -1,0 +1,33 @@
+.music-dock {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+  padding: 0.5rem;
+  background-color: var(--app-surface-dark);
+  border-top: 2px solid var(--app-brand);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.music-dock__inner {
+  max-width: 42rem;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+
+  // The music player replaces the placeholder div with its own iframe.
+  ::ng-deep iframe {
+    display: block;
+    border: 0;
+  }
+}
+
+// Reserves space at the end of the page so the fixed dock never covers the footer.
+.music-dock__spacer {
+  background-color: var(--app-surface-dark);
+}
+
+[hidden] {
+  display: none !important;
+}

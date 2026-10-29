@@ -5,7 +5,7 @@ import { SpotifyEmbedController, SpotifyEmbedLoader } from './spotify-embed-load
 export const PLAYLIST_ID = '6xnw2ADbqXpsys7mtlJ9Ms';
 export const PLAYLIST_URI = `spotify:playlist:${PLAYLIST_ID}`;
 export const PLAYLIST_URL = `https://open.spotify.com/playlist/${PLAYLIST_ID}`;
-export const SPOTIFY_EMBED_HEIGHT = 152;
+export const SPOTIFY_EMBED_HEIGHT = 80;
 const READY_TIMEOUT_MS = 15_000;
 
 @Service()

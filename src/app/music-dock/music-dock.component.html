@@ -1,0 +1,11 @@
+<!-- Hidden (not removed) on error so the embed host element stays stable. -->
+<div
+  class="music-dock__spacer"
+  aria-hidden="true"
+  [hidden]="player.status() === 'error'"
+  [style.height]="'calc(' + player.mountHeight + 'px + 1rem + 2px)'"></div>
+<aside class="music-dock" aria-label="Music player" data-testid="music-dock" [hidden]="player.status() === 'error'">
+  <div class="music-dock__inner" [style.min-height.px]="player.mountHeight">
+    <div #embed></div>
+  </div>
+</aside>

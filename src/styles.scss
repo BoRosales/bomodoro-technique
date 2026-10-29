@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+/* App color tokens. Components use these so light/dark mode is handled in one place. */
+:root,
+[data-bs-theme='light'] {
+  --app-navbar-bg: #8ad6d1;
+  --app-brand: #8ad6d1;
+  --app-heading: #3d9a94;
+  --app-btn-bg: #4fb3ac;
+  --app-btn-bg-hover: #3d9a94;
+  --app-btn-fg: #fff;
+  --app-surface-dark: #2b6f6a;
+  --app-ring-track: #e6f6f5;
+  --app-danger-link: #b8433a;
+}
+
+[data-bs-theme='dark'] {
+  --bs-body-bg: #121a1a;
+  --bs-body-bg-rgb: 18, 26, 26;
+  --bs-tertiary-bg: #1a2524;
+  --app-navbar-bg: #1d4a47;
+  --app-brand: #3d9a94;
+  --app-heading: #8ad6d1;
+  --app-btn-bg: #2f7f79;
+  --app-btn-bg-hover: #3d9a94;
+  --app-btn-fg: #fff;
+  --app-surface-dark: #0f2624;
+  --app-ring-track: #213836;
+  --app-danger-link: #f08a80;
+}
